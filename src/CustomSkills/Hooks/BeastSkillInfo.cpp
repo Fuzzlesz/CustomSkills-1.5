@@ -19,7 +19,7 @@ namespace CustomSkills
 
 	void BeastSkillInfo::BeastSkillPatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::UpdateSkillList, 0x6A9);
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::UpdateSkillList, 0x6A2); //done
 		REL::make_pattern<"80 3D ?? ?? ?? ?? 00">().match_or_fail(hook.address());
 		util::write_disp(
 			hook.address() + 0x2,
@@ -88,7 +88,7 @@ namespace CustomSkills
 
 	void BeastSkillInfo::ZoomOutPatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::Navigate, 0x5A6);
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::Navigate, 0x5A5); //done
 		util::write_disp(
 			hook.address() + 0x2,
 			hook.address() + 0x7,

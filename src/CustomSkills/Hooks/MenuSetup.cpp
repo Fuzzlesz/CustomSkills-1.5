@@ -14,12 +14,13 @@ namespace CustomSkills
 		CameraPatch();
 		SkillArrayPatch();
 		UpdateSkillPatch();
-		CreateStarsPatch();
+		
+		Patch();
 	}
 
 	void MenuSetup::MenuPropertiesPatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::Create, 0x5D);
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::Create, 0x5D); //done
 		REL::make_pattern<"E8">().match_or_fail(hook.address());
 
 		using StatsMenu_ctor_t = RE::StatsMenu* (*)(RE::StatsMenu*);
