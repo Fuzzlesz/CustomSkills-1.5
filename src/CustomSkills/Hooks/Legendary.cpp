@@ -21,7 +21,7 @@ namespace CustomSkills
 
 	void Legendary::LegendaryHintPatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::SetSkillInfo, 0x153);
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::SetSkillInfo, 0x146); //done
 
 		REL::make_pattern<
 			"48 8B 0D ?? ?? ?? ?? "
@@ -52,7 +52,7 @@ namespace CustomSkills
 
 	void Legendary::ProcessButtonPatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::ProcessButton, 0x14E);
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::ProcessButton, 0x14D); //done
 
 		REL::make_pattern<
 			"8B D0 "
@@ -98,7 +98,7 @@ namespace CustomSkills
 
 	void Legendary::ProcessMessagePatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::ProcessMessage, 0x4D0);
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::ProcessMessage, 0x4CE); //done
 
 		REL::make_pattern<
 			"E8 ?? ?? ?? ?? "

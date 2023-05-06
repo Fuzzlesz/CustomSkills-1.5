@@ -42,7 +42,7 @@ namespace CustomSkills
 
 	void MenuSetup::SkillDomeArtPatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::Ctor, 0x413);
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::Ctor, 0x343); //done
 		REL::make_pattern<"E8">().match_or_fail(hook.address());
 
 		using RequestModelAsync_t = std::uint32_t(const char*, void**, void*, void*);
@@ -65,7 +65,7 @@ namespace CustomSkills
 
 	void MenuSetup::CameraPatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::SetCameraTarget, 0x27E);
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::SetCameraTarget, 0x274); //done
 		REL::make_pattern<"80 3D ?? ?? ?? ?? 00">().match_or_fail(hook.address());
 
 		util::write_disp(
@@ -76,7 +76,7 @@ namespace CustomSkills
 
 	void MenuSetup::SkillArrayPatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::UpdateSkillList, 0x6B6);
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::UpdateSkillList, 0x6B6); //done
 
 		REL::make_pattern<
 			"49 8B 4D 10 "
@@ -113,7 +113,7 @@ namespace CustomSkills
 
 	void MenuSetup::UpdateSkillPatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::UpdateSkillList, 0x90);
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::UpdateSkillList, 0x90); //done
 
 		REL::make_pattern<"80 3D ?? ?? ?? ?? 00">().match_or_fail(hook.address());
 
@@ -151,7 +151,7 @@ namespace CustomSkills
 
 	void MenuSetup::CreateStarsPatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::CreateStars, 0x92);
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::CreateStars, 0x92); //done
 
 		using GetActorValueInfo_t = RE::ActorValueInfo*(RE::ActorValue);
 		static REL::Relocation<GetActorValueInfo_t> _GetActorValueInfo;
