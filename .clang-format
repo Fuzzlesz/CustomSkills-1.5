@@ -65,8 +65,8 @@ KeepEmptyLinesAtTheStartOfBlocks: 'true'
 Language: Cpp
 MaxEmptyLinesToKeep: 2
 NamespaceIndentation: All
-PenaltyBreakAssignment: 500
-PenaltyIndentedWhitespace: 22
+PenaltyBreakAssignment: 200
+PenaltyIndentedWhitespace: 20
 PenaltyReturnTypeOnItsOwnLine: 1000
 PointerAlignment: Left
 ReflowComments : 'true'
