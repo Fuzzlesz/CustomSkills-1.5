@@ -19,7 +19,7 @@ namespace CustomSkills
 
 	void BeastSkillInfo::BeastSkillPatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::UpdateSkillList, 0x6A9);
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::UpdateSkillList, 0x6A2); //done
 		REL::make_pattern<"80 3D ?? ?? ?? ?? 00">().match_or_fail(hook.address());
 		util::write_disp(
 			hook.address() + 0x2,
@@ -88,7 +88,7 @@ namespace CustomSkills
 
 	void BeastSkillInfo::ZoomOutPatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::Navigate, 0x5A6);
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::Navigate, 0x5A5); //done
 		util::write_disp(
 			hook.address() + 0x2,
 			hook.address() + 0x7,
@@ -97,7 +97,7 @@ namespace CustomSkills
 
 	void BeastSkillInfo::PerkViewPatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::SetSkillInfo, 0x108F);
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::SetSkillInfo, 0xFAD); //done
 
 		REL::make_pattern<"80 3D ?? ?? ?? ?? 00">().match_or_fail(hook.address());
 		util::write_disp(
@@ -108,7 +108,7 @@ namespace CustomSkills
 
 	void BeastSkillInfo::PerkSkillNamePatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::SetSkillInfo, 0x10A0);
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::SetSkillInfo, 0xFBE); //done
 		REL::make_pattern<"48 83 C1 20 48 8B 01 FF 50 28">().match_or_fail(hook.address());
 
 		static auto GetSkillName = +[](RE::ActorValueInfo* a_avInfo) -> const char*

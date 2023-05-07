@@ -16,7 +16,7 @@ namespace CustomSkills
 
 	void Navigation::NavigatePatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::Navigate, 0x15C);
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::Navigate, 0x15C); //done
 		REL::make_pattern<"80 3D ?? ?? ?? ?? 00">().match_or_fail(hook.address());
 
 		util::write_disp(
@@ -27,7 +27,7 @@ namespace CustomSkills
 
 	void Navigation::CloseMenuPatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::DtorImpl, 0x39);
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::DtorImpl, 0x39); //done
 		REL::make_pattern<"80 3D ?? ?? ?? ?? 00">().match_or_fail(hook.address());
 
 		util::write_disp(
@@ -38,7 +38,7 @@ namespace CustomSkills
 
 	void Navigation::RotatePatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::Rotate, 0x46);
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::Rotate, 0x46); //done
 		REL::make_pattern<"80 3D ?? ?? ?? ?? 00">().match_or_fail(hook.address());
 
 		util::write_disp(
