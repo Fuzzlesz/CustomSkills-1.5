@@ -18,15 +18,15 @@ namespace CustomSkills
 	{
 		auto& trampoline = SKSE::GetTrampoline();
 
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::Main::Update, 0x1E); //definitely check
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::Main::Update, 0x1E);			// VERIFIED
 		REL::make_pattern<"E8">().match_or_fail(hook.address());
 
 		_DoFrame = trampoline.write_call<5>(hook.address(), &DoFrame);
 	}
 
-	void Update::SetBeastModePatch()
+void Update::SetBeastModePatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::OpenStatsMenu, 0x63); //done
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::OpenStatsMenu, 0x63);			// VERIFIED
 		REL::make_pattern<"88 1D">().match_or_fail(hook.address());
 
 		static auto SetBeastMode = +[](bool a_beastMode)
@@ -63,7 +63,7 @@ namespace CustomSkills
 
 	void Update::ExitModePatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>{ RE::Offset::StatsMenu::DtorImpl, 0x24A }; //done
+		auto hook = REL::Relocation<std::uintptr_t>{ RE::Offset::StatsMenu::DtorImpl, 0x24A };	// VERIFIED
 		REL::make_pattern<"44 88 2D">().match_or_fail(hook.address());
 
 		static auto ExitMode = +[]()

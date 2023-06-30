@@ -14,13 +14,12 @@ namespace CustomSkills
 		CameraPatch();
 		SkillArrayPatch();
 		UpdateSkillPatch();
-		
-		Patch();
+		CreateStarsPatch();
 	}
 
 	void MenuSetup::MenuPropertiesPatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::Create, 0x5D); //done
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::Create, 0x5D);					// VERIFIED
 		REL::make_pattern<"E8">().match_or_fail(hook.address());
 
 		using StatsMenu_ctor_t = RE::StatsMenu* (*)(RE::StatsMenu*);
@@ -42,7 +41,7 @@ namespace CustomSkills
 
 	void MenuSetup::SkillDomeArtPatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::Ctor, 0x343); //done
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::Ctor, 0x343);					// VERIFIED
 		REL::make_pattern<"E8">().match_or_fail(hook.address());
 
 		using RequestModelAsync_t = std::uint32_t(const char*, void**, void*, void*);
@@ -65,7 +64,7 @@ namespace CustomSkills
 
 	void MenuSetup::CameraPatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::SetCameraTarget, 0x274); //done
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::SetCameraTarget, 0x268);			// VERIFIED
 		REL::make_pattern<"80 3D ?? ?? ?? ?? 00">().match_or_fail(hook.address());
 
 		util::write_disp(
@@ -76,12 +75,12 @@ namespace CustomSkills
 
 	void MenuSetup::SkillArrayPatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::UpdateSkillList, 0x6B6); //done
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::UpdateSkillList, 0x6AF);			// VERIFIED
 
 		REL::make_pattern<
 			"49 8B 4D 10 "
 			"48 8B 01 "
-			"44 89 74 24 30 "
+			"89 7C 24 30 "
 			"C7 44 24 28 5A 00 00 00">()
 			.match_or_fail(hook.address());
 
@@ -99,9 +98,9 @@ namespace CustomSkills
 				mov(ptr[rsp + 0x28], eax);
 				mov(rcx, ptr[r13 + 0x10]);
 				mov(rax, ptr[rcx]);
-				mov(ptr[rsp + 0x30], r14d);
+				mov(ptr[rsp + 0x30], edi);
 				jmp(ptr[rip]);
-				dq(a_hookAddr + 0x14);
+				dq(a_hookAddr + 0x13);
 			}
 		};
 
@@ -113,7 +112,7 @@ namespace CustomSkills
 
 	void MenuSetup::UpdateSkillPatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::UpdateSkillList, 0x90); //done
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::UpdateSkillList, 0x90);			// VERIFIED
 
 		REL::make_pattern<"80 3D ?? ?? ?? ?? 00">().match_or_fail(hook.address());
 
@@ -130,7 +129,7 @@ namespace CustomSkills
 			{
 				push(rcx);
 
-				mov(ecx, r15d);
+				mov(ecx, r12d);
 				mov(rax, reinterpret_cast<std::uintptr_t>(ShouldSkipSkillUpdate));
 				call(rax);
 				cmp(al, 0);
@@ -151,7 +150,7 @@ namespace CustomSkills
 
 	void MenuSetup::CreateStarsPatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::CreateStars, 0x92); //done
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::CreateStars, 0x8E);				// VERIFIED
 
 		using GetActorValueInfo_t = RE::ActorValueInfo*(RE::ActorValue);
 		static REL::Relocation<GetActorValueInfo_t> _GetActorValueInfo;

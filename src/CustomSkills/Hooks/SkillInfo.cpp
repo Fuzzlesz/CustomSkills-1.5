@@ -17,7 +17,7 @@ namespace CustomSkills
 
 	void SkillInfo::SkillNamePatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::UpdateSkillList, 0x1EF); //done
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::UpdateSkillList, 0x1EE);				// VERIFIED
 		REL::make_pattern<"E8">().match_or_fail(hook.address());
 
 		using GetSkillName_t = const char*(std::uint32_t);
@@ -37,9 +37,9 @@ namespace CustomSkills
 		_GetSkillName = trampoline.write_call<5>(hook.address(), GetSkillName);
 	}
 
-	void SkillInfo::SkillColorPatch()
+void SkillInfo::SkillColorPatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::UpdateSkillList, 0x2F1); //done
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::UpdateSkillList, 0x2F1);				// VERIFIED
 		REL::make_pattern<"E8">().match_or_fail(hook.address());
 
 		using GetSkillColor_t = const char*(std::uint32_t);
@@ -48,13 +48,13 @@ namespace CustomSkills
 		auto GetSkillColor = +[](std::uint32_t a_skill) -> const char*
 		{
 			if (CustomSkillsManager::IsOurMenuMode()) {
-				if (CustomSkillsManager::_menuSkill->UpdateColor()) {
-					return CustomSkillsManager::_menuSkill->ColorStr.c_str();
+					if (CustomSkillsManager::_menuSkill->UpdateColor()) {
+						return CustomSkillsManager::_menuSkill->ColorStr.c_str();
+					}
+					else {
+						return CustomSkillsManager::_colorOfSkillNormal.c_str();
+					}
 				}
-				else {
-					return CustomSkillsManager::_colorOfSkillNormal.c_str();
-				}
-			}
 
 			return _GetSkillColor(a_skill);
 		};
@@ -65,8 +65,8 @@ namespace CustomSkills
 
 	void SkillInfo::PerkSkillNamePatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::SetSkillInfo, 0x10D5); //done
-		REL::make_pattern<"49 8D 4E 20 FF 50 28">().match_or_fail(hook.address());
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::SetSkillInfo, 0x10D1);				// VERIFIED
+		REL::make_pattern<"48 8D 4E 20 FF 50 28">().match_or_fail(hook.address());
 
 		static auto GetSkillName = +[](RE::TESFullName* a_name) -> const char*
 		{
@@ -81,7 +81,7 @@ namespace CustomSkills
 		{
 			Patch(std::uintptr_t a_hookAddr)
 			{
-				lea(rcx, ptr[r14 + 0x20]);
+				lea(rcx, ptr[rsi + 0x20]);
 				mov(rax, reinterpret_cast<std::uintptr_t>(GetSkillName));
 				call(rax);
 
@@ -99,7 +99,7 @@ namespace CustomSkills
 
 	void SkillInfo::SkillDescriptionPatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::SetSkillInfo, 0x156C);   //check this original offset: 0x154d
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::SetSkillInfo, 0x148F);				// VERIFIED
 		REL::make_pattern<"E8">().match_or_fail(hook.address());
 
 		using GetDescription_t = void(RE::BSString&, RE::ActorValue);

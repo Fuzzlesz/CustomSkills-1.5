@@ -21,13 +21,13 @@ namespace CustomSkills
 
 	void Legendary::LegendaryHintPatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::SetSkillInfo, 0x146); //done
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::SetSkillInfo, 0x146);			// VERIFIED 
 
 		REL::make_pattern<
 			"48 8B 0D ?? ?? ?? ?? "
 			"48 81 C1 ?? 00 00 00 "
 			"48 8B 01 "
-			"41 8B D7 "
+			"8B D6 "
 			"FF 50 18">()
 			.match_or_fail(hook.address());
 
@@ -35,7 +35,7 @@ namespace CustomSkills
 		{
 			Patch()
 			{
-				mov(ecx, r15d);
+				mov(ecx, esi);
 				mov(rax,
 					reinterpret_cast<std::uintptr_t>(&CustomSkillsManager::GetBaseSkillLevel));
 				call(rax);
@@ -45,14 +45,14 @@ namespace CustomSkills
 
 		Patch patch{};
 		patch.ready();
-		assert(patch.getSize() == 0x17);
+		assert(patch.getSize() == 0x16);
 
 		REL::safe_write(hook.address(), patch.getCode(), patch.getSize());
 	}
 
 	void Legendary::ProcessButtonPatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::ProcessButton, 0x14D); //done
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::ProcessButton, 0x155);			// VERIFIED
 
 		REL::make_pattern<
 			"8B D0 "
@@ -98,7 +98,7 @@ namespace CustomSkills
 
 	void Legendary::ProcessMessagePatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::ProcessMessage, 0x4CE); //done
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::ProcessMessage, 0x4C7);			// VERIFIED
 
 		REL::make_pattern<
 			"E8 ?? ?? ?? ?? "
@@ -129,8 +129,7 @@ namespace CustomSkills
 	void Legendary::LegendarySkillConfirmPatch()
 	{
 		auto hook = REL::Relocation<std::uintptr_t>(
-			RE::Offset::LegendarySkillResetConfirmCallback::Run,
-			0x1C0);
+			RE::Offset::LegendarySkillResetConfirmCallback::Run, 0x226);								// VERIFIED
 
 		REL::make_pattern<
 			"48 81 C1 ?? 00 00 00 "
@@ -161,8 +160,7 @@ namespace CustomSkills
 	void Legendary::ResetSkillLevelPatch()
 	{
 		auto hook = REL::Relocation<std::uintptr_t>(
-			RE::Offset::LegendarySkillResetConfirmCallback::Run,
-			0x1F6);
+			RE::Offset::LegendarySkillResetConfirmCallback::Run, 0x25C);								// VERIFIED
 
 		REL::make_pattern<"8B 56 1C FF 50 20">().match_or_fail(hook.address());
 
@@ -197,8 +195,7 @@ namespace CustomSkills
 	void Legendary::PlayerSkillsPatch()
 	{
 		auto hook = REL::Relocation<std::uintptr_t>(
-			RE::Offset::LegendarySkillResetConfirmCallback::Run,
-			0x20D);
+			RE::Offset::LegendarySkillResetConfirmCallback::Run, 0x273);								// VERIFIED
 
 		using MakeLegendary_t = void(RE::PlayerCharacter::PlayerSkills*, RE::ActorValue);
 		static REL::Relocation<MakeLegendary_t> _MakeLegendary;
@@ -218,7 +215,7 @@ namespace CustomSkills
 
 	void Legendary::LegendaryAvailablePatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::IsLegendaryDifficultyAvailable);
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::IsLegendaryDifficultyAvailable);			// VERIFIED
 
 		REL::make_pattern<"83 3D">().match_or_fail(hook.address());
 
@@ -259,10 +256,9 @@ namespace CustomSkills
 	void Legendary::RefundPerksPatch()
 	{
 		auto hook = REL::Relocation<std::uintptr_t>(
-			RE::Offset::BGSSkillPerkTreeNode::RefundPerks,
-			0xED);
+			RE::Offset::BGSSkillPerkTreeNode::RefundPerks, 0xA2);										// VERIFIED
 
-		REL::make_pattern<"44 00 B8 ?? ?? 00 00">().match_or_fail(hook.address());
+	REL::make_pattern<"40 00 B0 ?? ?? 00 00">().match_or_fail(hook.address());
 
 		static auto ModifyPerkPoints = +[](std::uint8_t a_countDelta)
 		{
@@ -278,11 +274,11 @@ namespace CustomSkills
 		{
 			Patch(std::uintptr_t a_hookAddr)
 			{
-				mov(cl, r15b);
+				mov(cl, sil);
 				mov(rax, reinterpret_cast<std::uintptr_t>(ModifyPerkPoints));
 				call(rax);
 				xor_(r8d, r8d);
-				mov(rdx, r13);
+				mov(rdx, rbp);
 
 				jmp(ptr[rip]);
 				dq(a_hookAddr + 0x7);

@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.24)
 
 project(
-	InventoryInjector
-	VERSION 1.0.2
+	CustomSkills
+	VERSION 2.0.2
 	LANGUAGES CXX
 )
 
@@ -13,6 +13,8 @@ list(APPEND CMAKE_MODULE_PATH
 	"${PROJECT_SOURCE_DIR}/tools/Modules"
 )
 include(SKSEPlugin)
+
+set(SKSE_USE_XBYAK ON)
 
 SKSEPlugin_Add(
 	${PROJECT_NAME}
@@ -26,10 +28,10 @@ SKSEPlugin_Add(
 		src/PCH/PCH.h
 )
 
-find_package(jsoncpp CONFIG REQUIRED)
+find_path(SIMPLEINI_INCLUDE_DIRS "ConvertUTF.c")
 
-target_link_libraries(
+target_include_directories(
 	${PROJECT_NAME}
 	PRIVATE
-		jsoncpp_static
+		${SIMPLEINI_INCLUDE_DIRS}
 )

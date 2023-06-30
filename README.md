@@ -1,7 +1,6 @@
-# Inventory Interface Information Injector
-Injects custom icons and other information into SkyUI's inventory item interfaces.
+Custom Skills Framework
 
-Port of original mod by Parapets to Skyrim version 1.5.97.
+Port of the 2.0 SKSE version by Parapets to Skyrim version 1.5.97.
 
 ## Requirements
 * [CMake](https://cmake.org/)
@@ -18,8 +17,8 @@ Port of original mod by Parapets to Skyrim version 1.5.97.
 
 ## Building
 ```
-git clone https://github.com/Fuzzlesz/InventoryInjector-SE
-cd InventoryInjector-SE
+git clone https://github.com/Fuzzlesz/CustomSkills-1.5
+cd CustomSkills-1.5
 git submodule init
 git submodule update
 cmake --preset vs2022-windows

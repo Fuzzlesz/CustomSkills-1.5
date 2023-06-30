@@ -21,7 +21,7 @@ namespace CustomSkills
 
 	void SkillProgress::CurrentPerkPointsPatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::GetPerkCount, 0x10F); //done maybe check original is 0xE1
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::GetPerkCount, 0x10F);		// VERIFIED
 		REL::make_pattern<"0F B6 80">().match_or_fail(hook.address());
 
 		struct Patch : Xbyak::CodeGenerator
@@ -45,7 +45,7 @@ namespace CustomSkills
 
 	void SkillProgress::SelectPerkPatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::SelectPerk, 0x1DA); //done
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::SelectPerk, 0x1DA);			// VERIFIED
 		REL::make_pattern<"E8">().match_or_fail(hook.address());
 
 		auto& trampoline = SKSE::GetTrampoline();
@@ -73,13 +73,13 @@ namespace CustomSkills
 
 	void SkillProgress::SkillLevelPatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::UpdateSkillList, 0x10D); //done
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::UpdateSkillList, 0x108);		// VERIFIED
 
 		REL::make_pattern<
 			"48 8B 0D ?? ?? ?? ?? "
 			"48 81 C1 ?? 00 00 00 "
 			"48 8B 01 "
-			"8B D7 "
+			"8B D6 "
 			"FF 50 08">()
 			.match_or_fail(hook.address());
 
@@ -87,7 +87,7 @@ namespace CustomSkills
 		{
 			Patch()
 			{
-				mov(ecx, edi);
+				mov(ecx, esi);
 				mov(rax, reinterpret_cast<std::uintptr_t>(&CustomSkillsManager::GetSkillLevel));
 				call(rax);
 				nop(0x8);
@@ -103,13 +103,13 @@ namespace CustomSkills
 
 	void SkillProgress::SkillLevelPatch2()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::SetSkillInfo, 0x1634); //done maybe check it
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::SetSkillInfo, 0x1621);		// VERIFIED
 
-		REL::make_pattern<
+	REL::make_pattern<
 			"48 8B 0D ?? ?? ?? ?? "
 			"48 81 C1 ?? 00 00 00 "
 			"48 8B 01 "
-			"41 8B D7 "
+			"8B D6 "
 			"FF 50 08">()
 			.match_or_fail(hook.address());
 
@@ -117,7 +117,7 @@ namespace CustomSkills
 		{
 			Patch()
 			{
-				mov(ecx, r15d);
+				mov(ecx, esi);
 				mov(rax, reinterpret_cast<std::uintptr_t>(&CustomSkillsManager::GetSkillLevel));
 				call(rax);
 				nop(0x8);
@@ -126,22 +126,22 @@ namespace CustomSkills
 
 		Patch patch{};
 		patch.ready();
-		assert(patch.getSize() == 0x17);
+		assert(patch.getSize() == 0x16);
 
 		REL::safe_write(hook.address(), patch.getCode(), patch.getSize());
 	}
 
 	void SkillProgress::PerkViewSkillLevelPatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::SetSkillInfo, 0x10C3); //done maybe check
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::SetSkillInfo, 0x10BD);		// VERIFIED
 
-		REL::make_pattern<"8B 95 78 06 00 00 FF 50 18">().match_or_fail(hook.address());
+	REL::make_pattern<"8B 95 70 05 00 00 FF 50 18">().match_or_fail(hook.address());
 
 		struct Patch : Xbyak::CodeGenerator
 		{
 			Patch(std::uintptr_t a_hookAddr)
 			{
-				mov(ecx, ptr[rbp + 0x678]);
+				mov(ecx, ptr[rbp + 0x570]);
 				mov(rax,
 					reinterpret_cast<std::uintptr_t>(&CustomSkillsManager::GetBaseSkillLevel));
 				call(rax);
@@ -240,8 +240,8 @@ namespace CustomSkills
 					*a_legendary = 0;
 				}
 			}
-		}
-		else {
+			}
+			else {
 			std::size_t idx = util::to_underlying(a_skill) - 6;
 			auto& data = a_playerSkills->data->skills[idx];
 			*a_level = data.level;
