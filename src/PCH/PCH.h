@@ -17,7 +17,7 @@ namespace logger = SKSE::log;
 namespace util
 {
 	using SKSE::stl::report_and_fail;
-	using SKSE::stl::to_underlying;
+	using std::to_underlying;
 
 	template <typename T>
 	inline void write_disp(std::uintptr_t a_dst, std::uintptr_t a_rip, REL::Relocation<T*>& a_var)

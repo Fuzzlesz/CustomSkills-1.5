@@ -89,9 +89,9 @@ namespace CustomSkills
 	void SkillInfo::SkillStatsPatch()
 	{
 		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::UpdateSkillList, 0x9D);
-		REL::make_pattern<"0F 85 A7 03 00 00">().match_or_fail(hook.address() - 0x6);
+		REL::make_pattern<"0F 85 8F 03 00 00">().match_or_fail(hook.address() - 0x6);
 
-		auto retn = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::UpdateSkillList, 0x6EB);
+		auto retn = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::UpdateSkillList, 0x6E3);
 
 		struct Patch : Xbyak::CodeGenerator
 		{
@@ -121,7 +121,7 @@ namespace CustomSkills
 
 	void SkillInfo::SkillDescriptionPatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::SetSkillInfo, 0x154D);
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::SetSkillInfo, 0x148F);
 		REL::make_pattern<"E8">().match_or_fail(hook.address());
 
 		using GetDescription_t = void(RE::BSString&, RE::ActorValue);

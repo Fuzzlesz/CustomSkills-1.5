@@ -6,102 +6,102 @@ namespace RE
 	{
 		namespace BGSPerk
 		{
-			inline constexpr auto GetRequirementsText = REL::ID(23826);
+			inline constexpr auto GetRequirementsText = REL::ID(23356);				// 1403388a0
+		}
+
+		namespace BSScaleformManager
+		{
+			inline constexpr auto LoadMovie = REL::ID(80302);
 		}
 
 		namespace BGSSkillPerkTreeNode
 		{
-			inline constexpr auto RefundPerks = REL::ID(52564);
+			inline constexpr auto RefundPerks = REL::ID(51716);						// 1408caf80
 		}
 
 		namespace BSTArrayBase
 		{
-			inline constexpr auto ListAlloc = REL::ID(68163);
+			inline constexpr auto ListAlloc = REL::ID(66908);						// 140c04a20
 		}
 
 		namespace CraftingSubMenus
 		{
 			namespace ConstructibleObjectMenu
 			{
-				inline constexpr auto CreationConfirmed = REL::ID(51369);
-				inline constexpr auto UpdateBottomBar = REL::ID(51458);
+				inline constexpr auto CreationConfirmed = REL::ID(50476);			// 14086E2C0
+				inline constexpr auto UpdateBottomBar = REL::ID(50566);			    // 140874350
 			}
 		}
 
 		namespace LegendarySkillResetConfirmCallback
 		{
-			inline constexpr auto Run = REL::ID(52591);
+			inline constexpr auto Run = REL::ID(51714);								// 1408cac50
 		}
 
 		namespace Main
 		{
-			inline constexpr auto OnIdle = REL::ID(36564);
-		}
-
-		namespace PlayerCharacter
-		{
-			inline constexpr auto Vtbl_ActorValueOwner = REL::ID(208050);
+			inline constexpr auto OnIdle = REL::ID(35565);							// 1405b2ff0
 		}
 
 		namespace PlayerSkills
 		{
-			inline constexpr auto GetSkillProgress = REL::ID(41559);
+			inline constexpr auto GetSkillProgress = REL::ID(40552);				// 1406e6130
 		}
 
 		namespace StatsMenu
 		{
-			inline constexpr auto Animate = REL::ID(52517);
-			inline constexpr auto Create = REL::ID(52612);
-			inline constexpr auto CreateStars = REL::ID(52540);
-			inline constexpr auto Ctor = REL::ID(52508);
-			inline constexpr auto DtorImpl = REL::ID(52509);
-			inline constexpr auto GetPerkCount = REL::ID(52537);
-			inline constexpr auto GotoNode = REL::ID(52539);
-			inline constexpr auto LastSelectedTree = REL::ID(383192);
-			inline constexpr auto LoadSkydome = REL::ID(52531);
-			inline constexpr auto ModifyPerkCount = REL::ID(52538);
-			inline constexpr auto ProcessButton = REL::ID(52520);
-			inline constexpr auto ProcessMessage = REL::ID(52510);
-			inline constexpr auto ProcessRotateEvent = REL::ID(52532);
-			inline constexpr auto Rotate = REL::ID(52534);
-			inline constexpr auto SelectPerk = REL::ID(52521);
-			inline constexpr auto SelectStar = REL::ID(52542);
-			inline constexpr auto SetBeastSkillInfo = REL::ID(52546);
-			inline constexpr auto SetCameraTarget = REL::ID(52530);
-			inline constexpr auto SetSelectedTree = REL::ID(52539);
-			inline constexpr auto SetSkillInfo = REL::ID(52527);
-			inline constexpr auto UpdateSelectedTree = REL::ID(52543);
-			inline constexpr auto UpdateSkillList = REL::ID(52525);
+			inline constexpr auto Animate = REL::ID(51644);                         // 1408C09E0
+			inline constexpr auto Create = REL::ID(51738);							// 1408cc7b0	
+			inline constexpr auto CreateStars = REL::ID(51667);						// 1408C7650	
+			inline constexpr auto Ctor = REL::ID(51636);							// 1408be990
+			inline constexpr auto DtorImpl = REL::ID(51637);						// 1408beeb0
+			inline constexpr auto GetPerkCount = REL::ID(51664);					// 1408c6f20
+			inline constexpr auto GotoNode = REL::ID(51666);                        // 1408C7110
+			inline constexpr auto LastSelectedTree = REL::ID(510254);               // 141DF4A1C
+			inline constexpr auto LoadSkydome = REL::ID(51658);                     // 1408C4CA0
+			inline constexpr auto ModifyPerkCount = REL::ID(51665);					// 1408c7050
+			inline constexpr auto ProcessButton = REL::ID(51647);					// 1408c0d90
+			inline constexpr auto ProcessMessage = REL::ID(51638);					// 1408bf360
+			inline constexpr auto ProcessRotateEvent = REL::ID(51659);				// 1408c51b0
+			inline constexpr auto Rotate = REL::ID(51661);							// 1408c5b60
+			inline constexpr auto SelectPerk = REL::ID(51648);                      // 1408c1970
+			inline constexpr auto SelectStar = REL::ID(51669);						// 1408c7920
+			inline constexpr auto SetBeastSkillInfo = REL::ID(51673);				// 1408c8350
+			inline constexpr auto SetCameraTarget = REL::ID(51657);					// 1408c4530
+			inline constexpr auto SetSelectedTree = REL::ID(51666);					// 1408c7110
+			inline constexpr auto SetSkillInfo = REL::ID(51654);					// 1408c2ba0
+			inline constexpr auto UpdateSelectedTree = REL::ID(51670);              // 1408C7E50
+			inline constexpr auto UpdateSkillList = REL::ID(51652);					// 1408c20c0
 		}
 
 		namespace TESClass
 		{
-			inline constexpr auto GetMaximumTrainingLevel = REL::ID(24450);
+			inline constexpr auto GetMaximumTrainingLevel = REL::ID(23959);			// 140353B20
 		}
 
 		namespace TESObjectBOOK
 		{
-			inline constexpr auto Read = REL::ID(17842);
+			inline constexpr auto Read = REL::ID(17439);							// 140229EF0
 		}
 
 		namespace TrainingMenu
 		{
-			inline constexpr auto SetTrainer = REL::ID(52666);
-			inline constexpr auto Train = REL::ID(52667);
+			inline constexpr auto SetTrainer = REL::ID(51792);						// 1408CE740
+			inline constexpr auto Train = REL::ID(51793);							// 1408CE8E0
 		}
 
-		inline constexpr auto DebugMessageBox = REL::ID(55376);
-		inline constexpr auto FadeOutGame = REL::ID(52847);
-		inline constexpr auto GetActorValueInfo = REL::ID(27202);
-		inline constexpr auto GetActorValueName = REL::ID(27192);
-		inline constexpr auto GetActorValueColor = REL::ID(52945);
-		inline constexpr auto GetComparisonValue = REL::ID(29919);
-		inline constexpr auto IsBeastMode = REL::ID(406438);
-		inline constexpr auto IsInMenuMode = REL::ID(403435);
-		inline constexpr auto IsLegendaryDifficultyAvailable = REL::ID(15868);
-		inline constexpr auto LastChosenMenuIndex = REL::ID(383192);
-		inline constexpr auto OpenStatsMenu = REL::ID(52516);
-		inline constexpr auto ShowHUDMessage = REL::ID(51646);
-		inline constexpr auto ShowTrainingMenu = REL::ID(52942);
+		inline constexpr auto DebugMessageBox = REL::ID(54737);						// 14096dd60         
+		inline constexpr auto FadeOutGame = REL::ID(51909);							// 1408945A0
+		inline constexpr auto GetActorValueInfo = REL::ID(26569);					// 1403E1420           
+		inline constexpr auto GetActorValueName = REL::ID(26561);					// 1403E1130       
+		inline constexpr auto GetActorValueColor = REL::ID(52059);                  // 1408DAB00
+		inline constexpr auto GetComparisonValue = REL::ID(29088);					// 1404453e0
+		inline constexpr auto IsBeastMode = REL::ID(519908);						// 142F4E920   
+		inline constexpr auto IsInMenuMode = REL::ID(516933);						// 142f26b74
+		inline constexpr auto IsLegendaryDifficultyAvailable = REL::ID(15642);		// 1401d14b0
+		inline constexpr auto LastChosenMenuIndex = REL::ID(510243);				// 141df4990  
+		inline constexpr auto OpenStatsMenu = REL::ID(51643);						// 1408C0950 
+		inline constexpr auto ShowHUDMessage = REL::ID(50751);						// 140880160     
+		inline constexpr auto ShowTrainingMenu = REL::ID(52057);                    // 1408DA9E0
 	}
 }

@@ -65,7 +65,7 @@ namespace CustomSkills
 
 	void SkillProgress::CurrentPerkPointsPatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::GetPerkCount, 0xE1);
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::GetPerkCount,0x10F);
 		REL::make_pattern<"0F B6 80">().match_or_fail(hook.address());
 
 		// TRAMPOLINE: 8
@@ -76,7 +76,7 @@ namespace CustomSkills
 
 	void SkillProgress::SelectPerkPatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::SelectPerk, 0x1CD);
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::SelectPerk, 0x1DA);
 		REL::make_pattern<"E8">().match_or_fail(hook.address());
 
 		// TRAMPOLINE: 14
@@ -94,9 +94,9 @@ namespace CustomSkills
 		util::write_14branch(hook.address(), &SkillProgress::GetSkillProgress);
 	}
 
-	void SkillProgress::HideLevelPatch()
+void SkillProgress::HideLevelPatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::SetSkillInfo, 0x108F);
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::SetSkillInfo, 0xFAD);
 
 		REL::make_pattern<"80 3D ?? ?? ?? ?? 00">().match_or_fail(hook.address());
 
@@ -120,7 +120,7 @@ namespace CustomSkills
 				Xbyak::Label funcLbl;
 				Xbyak::Label retnLbl;
 
-				mov(ecx, ptr[rbp + 0x678]);
+				mov(ecx, ptr[rbp + 0x570]);
 				call(ptr[rip + funcLbl]);
 				cmp(al, 0);
 				mov(rax, ptr[rbp - 0x70]);

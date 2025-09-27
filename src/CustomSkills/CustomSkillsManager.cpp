@@ -93,7 +93,7 @@ namespace CustomSkills
 
 	bool CustomSkillsManager::IsMenuControlsEnabled()
 	{
-		static REL::Relocation<bool()> func{ REL::ID(55484) };
+		static REL::Relocation<bool()> func{ REL::ID(54851) };					  // 140973610
 		return func();
 	}
 

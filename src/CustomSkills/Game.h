@@ -24,7 +24,7 @@ namespace CustomSkills
 		void ShowTrainingMenu(RE::Actor* a_trainer);
 
 		void ShowHUDMessage(
-			RE::HUDData::Type a_messageType,
+			RE::HUD_MESSAGE_TYPE a_messageType,
 			const char* a_message,
 			RE::TESQuest* a_owningQuest = nullptr,
 			RE::BGSQuestObjective* a_questObjective = nullptr);

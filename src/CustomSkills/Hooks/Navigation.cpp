@@ -74,8 +74,8 @@ namespace CustomSkills
 
 	void Navigation::RotationSpeedPatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::Rotate, 0x35A);
-		REL::make_pattern<"F3 0F 59 F2 41 0F 2F F0">().match_or_fail(hook.address());
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::Rotate, 0x32E);
+		REL::make_pattern<"F3 0F 59 D7 41 0F 2F D0">().match_or_fail(hook.address());
 
 		auto ModRotationSpeed = +[](std::uint32_t a_numTrees, float a_t) -> float
 		{

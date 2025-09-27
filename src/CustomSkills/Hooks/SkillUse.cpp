@@ -16,7 +16,7 @@ namespace CustomSkills
 
 	void SkillUse::UseSkillPatch()
 	{
-		auto vtbl = REL::Relocation<std::uintptr_t>(RE::Offset::PlayerCharacter::Vtbl);
+		auto vtbl = REL::Relocation<std::uintptr_t>(RE::PlayerCharacter::VTABLE[0]);
 
 		_UseSkill = vtbl.write_vfunc(247, &SkillUse::UseSkill);
 	}
@@ -92,8 +92,8 @@ namespace CustomSkills
 	{
 		auto hook = REL::Relocation<std::uintptr_t>(
 			RE::Offset::CraftingSubMenus::ConstructibleObjectMenu::UpdateBottomBar,
-			0x37D);
-		REL::make_pattern<"80 F9 11 77 0D">().match_or_fail(hook.address());
+			0x1AF);
+		REL::make_pattern<"83 F8 11 77 07">().match_or_fail(hook.address());
 
 		struct Patch : Xbyak::CodeGenerator
 		{
@@ -103,23 +103,23 @@ namespace CustomSkills
 				Xbyak::Label noSkill;
 				Xbyak::Label funcLbl;
 
-				cmp(cl, 0x11);
+				cmp(eax, 0x11);
 				ja(customSkill);
 				jmp(ptr[rip]);
 				dq(a_hookAddr + 0x5);
 
 				L(customSkill);
-				mov(rcx, rdi);
 				call(ptr[rip + funcLbl]);
 				cmp(al, 0);
 				jz(noSkill);
 
 				jmp(ptr[rip]);
-				dq(a_hookAddr + 0xD);
+				dq(a_hookAddr + 0xA);
 
 				L(noSkill);
+				mov(rcx, rsi);
 				jmp(ptr[rip]);
-				dq(a_hookAddr + 0x12);
+				dq(a_hookAddr + 0xC);
 
 				L(funcLbl);
 				dq(a_funcAddr);
@@ -145,8 +145,8 @@ namespace CustomSkills
 	{
 		auto hook = REL::Relocation<std::uintptr_t>(
 			RE::Offset::CraftingSubMenus::ConstructibleObjectMenu::CreationConfirmed,
-			0x83);
-		REL::make_pattern<"83 F8 11 77 1E">().match_or_fail(hook.address());
+			0x78);
+		REL::make_pattern<"83 F8 11 77 1A">().match_or_fail(hook.address());
 
 		struct Patch : Xbyak::CodeGenerator
 		{
@@ -162,12 +162,12 @@ namespace CustomSkills
 
 				L(customSkill);
 				mov(rcx,
-					ptr[r15 + offsetof(RE::CraftingSubMenus::ConstructibleObjectMenu, furniture)]);
+					ptr[rbp + offsetof(RE::CraftingSubMenus::ConstructibleObjectMenu, furniture)]);
 				movaps(xmm1, xmm0);
 				call(ptr[rip + funcLbl]);
 
 				jmp(ptr[rip]);
-				dq(a_hookAddr + 0x23);
+				dq(a_hookAddr + 0x1F);
 
 				L(funcLbl);
 				dq(a_funcAddr);

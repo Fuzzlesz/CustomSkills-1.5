@@ -20,7 +20,7 @@ namespace CustomSkills
 
 	void Constellation::LoadSkydomePatch1()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::LoadSkydome, 0x168);
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::LoadSkydome, 0x159);
 		REL::make_pattern<"48 89 8C DF 98 00 00 00">().match_or_fail(hook.address());
 
 		auto SetCImageShader = +[](RE::BSShaderProperty* shader, std::uint32_t index)
@@ -56,7 +56,7 @@ namespace CustomSkills
 
 	void Constellation::EnterConstellationPatch1()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::Rotate, 0x3C6);
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::Rotate, 0x3A4);
 
 		auto EnterTree = +[](std::uint32_t a_index)
 		{
@@ -66,32 +66,35 @@ namespace CustomSkills
 
 		struct Patch : Xbyak::CodeGenerator
 		{
-			Patch(std::uintptr_t a_funcAddr) : Xbyak::CodeGenerator(0x18)
+			Patch(std::uintptr_t a_funcAddr, std::uintptr_t a_retnAddr)
 			{
 				Xbyak::Label funcLbl;
-				Xbyak::Label retn;
+				Xbyak::Label retnLbl;
 
 				mov(ecx, dword[rdi + offsetof(RE::StatsMenu, selectedTree)]);
 				call(ptr[rip + funcLbl]);
-				jmp(retn);
+				jmp(ptr[rip + retnLbl]);
 
 				L(funcLbl);
 				dq(a_funcAddr);
 
-				L(retn);
+				L(retnLbl);
+				dq(a_retnAddr);
 			}
 		};
 
-		Patch patch{ reinterpret_cast<std::uintptr_t>(EnterTree) };
-		patch.ready();
+		auto patch = new Patch(reinterpret_cast<std::uintptr_t>(EnterTree), hook.address() + 0x14);
+		patch->ready();
 
-		REL::safe_fill(hook.address(), REL::NOP, 0x18);
-		REL::safe_write(hook.address(), patch.getCode(), patch.getSize());
+		// TRAMPOLINE: 14
+		auto& trampoline = SKSE::GetTrampoline();
+		REL::safe_fill(hook.address(), REL::NOP, 0x14);
+		trampoline.write_branch<6>(hook.address(), patch->getCode());
 	}
 
 	void Constellation::EnterConstellationPatch2()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::Animate, 0x14B);
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::Animate, 0x149);
 
 		auto EnterTree = +[](std::uint32_t a_index)
 		{
@@ -140,7 +143,7 @@ namespace CustomSkills
 
 		struct Patch : Xbyak::CodeGenerator
 		{
-			Patch(std::uintptr_t a_funcAddr) : Xbyak::CodeGenerator(0x5C)
+			Patch(std::uintptr_t a_funcAddr) : Xbyak::CodeGenerator(0x62)
 			{
 				Xbyak::Label funcLbl;
 				Xbyak::Label retn;
@@ -152,7 +155,7 @@ namespace CustomSkills
 				L(funcLbl);
 				dq(a_funcAddr);
 
-				nop(0x46, false);
+				nop(0x4C, false);
 				L(retn);
 			}
 		};
@@ -160,7 +163,7 @@ namespace CustomSkills
 		Patch patch{ reinterpret_cast<std::uintptr_t>(ExitTree) };
 		patch.ready();
 
-		REL::safe_fill(hook.address(), REL::NOP, 0x5C);
+		REL::safe_fill(hook.address(), REL::NOP, 0x62);
 		REL::safe_write(hook.address(), patch.getCode(), patch.getSize());
 	}
 
@@ -168,7 +171,7 @@ namespace CustomSkills
 	{
 		auto hook = REL::Relocation<std::uintptr_t>(
 			RE::Offset::StatsMenu::ProcessRotateEvent,
-			0x2A1);
+			0x2A7);
 
 		auto ExitTree = +[](std::uint32_t a_index)
 		{
@@ -180,7 +183,7 @@ namespace CustomSkills
 
 		struct Patch : Xbyak::CodeGenerator
 		{
-			Patch(std::uintptr_t a_funcAddr) : Xbyak::CodeGenerator(0x4A)
+			Patch(std::uintptr_t a_funcAddr) : Xbyak::CodeGenerator(0x4D)
 			{
 				Xbyak::Label funcLbl;
 				Xbyak::Label retn;
@@ -192,7 +195,7 @@ namespace CustomSkills
 				L(funcLbl);
 				dq(a_funcAddr);
 
-				nop(0x34, false);
+				nop(0x37, false);
 				L(retn);
 			}
 		};
@@ -200,13 +203,13 @@ namespace CustomSkills
 		Patch patch{ reinterpret_cast<std::uintptr_t>(ExitTree) };
 		patch.ready();
 
-		REL::safe_fill(hook.address(), REL::NOP, 0x4A);
+		REL::safe_fill(hook.address(), REL::NOP, 0x4D);
 		REL::safe_write(hook.address(), patch.getCode(), patch.getSize());
 	}
 
 	void Constellation::KinectPatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::GotoNode, 0xB9);
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::GotoNode, 0xAB);
 
 		auto SetSelectedTree = +[](RE::StatsMenu* a_statsMenu, std::uint32_t a_newIndex)
 		{
@@ -221,20 +224,20 @@ namespace CustomSkills
 
 		struct Patch : Xbyak::CodeGenerator
 		{
-			Patch(std::uintptr_t a_funcAddr) : Xbyak::CodeGenerator(0x6B)
+			Patch(std::uintptr_t a_funcAddr) : Xbyak::CodeGenerator(0x69)
 			{
 				Xbyak::Label funcLbl;
 				Xbyak::Label retn;
 
 				mov(rcx, rdi);
-				mov(edx, r13d);
+				mov(edx, esi);
 				call(ptr[rip + funcLbl]);
 				jmp(retn);
 
 				L(funcLbl);
 				dq(a_funcAddr);
 
-				nop(0x55, false);
+				nop(0x53, false);
 				L(retn);
 			}
 		};
@@ -242,13 +245,13 @@ namespace CustomSkills
 		Patch patch{ reinterpret_cast<std::uintptr_t>(SetSelectedTree) };
 		patch.ready();
 
-		REL::safe_fill(hook.address(), REL::NOP, 0x6B);
+		REL::safe_fill(hook.address(), REL::NOP, 0x69);
 		REL::safe_write(hook.address(), patch.getCode(), patch.getSize());
 	}
 
 	void Constellation::UpdateConstellationPatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::ProcessMessage, 0x10B0);
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::ProcessMessage, 0x1020);
 
 		auto UpdateConstellation = +[](std::uint32_t a_index)
 		{
@@ -258,7 +261,7 @@ namespace CustomSkills
 		struct Patch : Xbyak::CodeGenerator
 		{
 			Patch(std::uintptr_t a_funcAddr, std::uintptr_t a_retnAddr)
-				: Xbyak::CodeGenerator(0xB2)
+				: Xbyak::CodeGenerator(0xAF)
 			{
 				Xbyak::Label funcLbl;
 				Xbyak::Label retnLbl;
@@ -276,10 +279,10 @@ namespace CustomSkills
 		};
 
 		Patch
-			patch{ reinterpret_cast<std::uintptr_t>(UpdateConstellation), hook.address() + 0xB2 };
+			patch{ reinterpret_cast<std::uintptr_t>(UpdateConstellation), hook.address() + 0xAF};
 		patch.ready();
 
-		REL::safe_fill(hook.address(), REL::NOP, 0xB2);
+		REL::safe_fill(hook.address(), REL::NOP, 0xAF);
 		REL::safe_write(hook.address(), patch.getCode(), patch.getSize());
 	}
 }

@@ -30,7 +30,7 @@ namespace CustomSkills
 			return _DoFrame(a_main);
 		};
 
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::Main::OnIdle, 0x3E);
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::Main::OnIdle, 0x1E);
 		REL::make_pattern<"E8">().match_or_fail(hook.address());
 
 		_DoFrame = trampoline.write_call<5>(hook.address(), DoFrame);
@@ -80,7 +80,7 @@ namespace CustomSkills
 
 	void Update::ExitModePatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>{ RE::Offset::StatsMenu::DtorImpl, 0x236 };
+		auto hook = REL::Relocation<std::uintptr_t>{ RE::Offset::StatsMenu::DtorImpl, 0x24A };
 		REL::make_pattern<"44 88 2D">().match_or_fail(hook.address());
 
 		static auto ExitMode = +[]()

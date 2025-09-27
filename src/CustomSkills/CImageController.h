@@ -13,20 +13,20 @@ namespace CustomSkills
 
 		static std::uint32_t CurrentTime()
 		{
-			static REL::Relocation<std::uint32_t*> currentTime{ REL::ID(410201) };
+			static REL::Relocation<std::uint32_t*> currentTime{ REL::ID(523662) };				// 142f6b950
 			return *currentTime;
 		}
 
 		bool IsActive()
 		{
-			return state != State::Resting || shader && shader->GetAlpha() > 0.0f;
+			return state != State::Resting || shader && shader->QMaterialAlpha() > 0.0f;
 		}
 
 		void SetShader(RE::BSShaderProperty* a_shader)
 		{
 			shader = a_shader;
 			shader->SetMaterial(a_shader->material, true);
-			shader->SetAlpha(0.0f);
+			shader->SetMaterialAlpha(0.0f);
 		}
 
 		void Enter()
@@ -54,11 +54,11 @@ namespace CustomSkills
 					alpha = 1.0f - alpha;
 				}
 
-				shader->SetAlpha(alpha);
+				shader->SetMaterialAlpha(alpha);
 			}
 			else {
 				float alpha = state == State::Entering ? 1.0f : 0.0f;
-				shader->SetAlpha(alpha);
+				shader->SetMaterialAlpha(alpha);
 
 				state = State::Resting;
 			}

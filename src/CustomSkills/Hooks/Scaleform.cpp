@@ -1,6 +1,7 @@
 #include "Scaleform.h"
 
 #include "CustomSkills/CustomSkillsManager.h"
+#include "RE/Offset.h"
 
 namespace CustomSkills
 {
@@ -10,7 +11,7 @@ namespace CustomSkills
 	{
 		auto hook = REL::Relocation<std::uintptr_t>(
 			RE::Offset::BSScaleformManager::LoadMovie,
-			0x1DD);
+			0x1D9);
 
 		if (!REL::make_pattern<"FF 15">().match(hook.address())) {
 			util::report_and_fail("Failed to install Scaleform hook"sv);

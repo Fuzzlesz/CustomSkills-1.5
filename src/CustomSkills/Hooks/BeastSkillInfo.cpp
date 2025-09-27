@@ -25,7 +25,7 @@ namespace CustomSkills
 
 		auto hook2 = REL::Relocation<std::uintptr_t>(
 			RE::Offset::StatsMenu::UpdateSkillList,
-			0x6A9);
+			0x6A2);
 		REL::make_pattern<"80 3D ?? ?? ?? ?? 00">().match_or_fail(hook2.address());
 
 		util::write_disp(
@@ -38,7 +38,7 @@ namespace CustomSkills
 	{
 		auto hook = REL::Relocation<std::uintptr_t>(
 			RE::Offset::StatsMenu::ProcessRotateEvent,
-			0x5A6);
+			0x5B1);
 
 		util::write_disp(
 			hook.address() + 0x2,

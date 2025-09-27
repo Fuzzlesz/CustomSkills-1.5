@@ -7,8 +7,7 @@ namespace CustomSkills
 {
 	void ActorValue::WriteHooks()
 	{
-		auto vtbl = REL::Relocation<std::uintptr_t>(
-			RE::Offset::PlayerCharacter::Vtbl_ActorValueOwner);
+		auto vtbl = REL::Relocation<std::uintptr_t>(RE::PlayerCharacter::VTABLE[5]);
 
 		_GetActorValue = vtbl.write_vfunc(1, &ActorValue::GetActorValue);
 		_GetPermanentActorValue = vtbl.write_vfunc(2, &ActorValue::GetPermanentActorValue);

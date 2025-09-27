@@ -52,29 +52,35 @@ namespace CustomSkills
 
 	void SkillBooks::CustomSkillPatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::TESObjectBOOK::Read, 0x103);
-		REL::make_pattern<"41 BD FF FF FF FF">().match_or_fail(hook.address());
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::TESObjectBOOK::Read, 0x4A);
+		REL::make_pattern<"0F 84 81 00 00 00">().match_or_fail(hook.address());
 
 		struct Patch : Xbyak::CodeGenerator
 		{
 			Patch(std::uintptr_t a_hookAddr, std::uintptr_t a_funcAddr)
 			{
+				Xbyak::Label noHook;
 				Xbyak::Label funcLbl;
 				Xbyak::Label learnedSkill;
 
-				mov(r13d, 0xFFFFFFFF);
-				mov(rcx, r15);
+				jnz(noHook);
+
+				mov(rcx, rdi);
 				call(ptr[rip + funcLbl]);
-				cmp(al, 0);
-				jnz(learnedSkill);
-				movzx(ecx, byte[r15 + 0x110]);
-
+				test(al, al);
+				jne(learnedSkill);
+				
+				movzx(ecx, byte[rdi + 0x110]);
 				jmp(ptr[rip]);
-				dq(a_hookAddr + 0x6);
-
+				dq(a_hookAddr + 0x87);
+				
 				L(learnedSkill);
 				jmp(ptr[rip]);
-				dq(a_hookAddr + 0x70);
+				dq(a_hookAddr + 0xF4);
+
+				L(noHook);
+				jmp(ptr[rip]);
+				dq(a_hookAddr + 0x6);
 
 				L(funcLbl);
 				dq(a_funcAddr);

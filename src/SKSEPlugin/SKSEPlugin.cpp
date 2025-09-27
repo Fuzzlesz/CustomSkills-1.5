@@ -48,18 +48,27 @@ namespace
 	}
 }
 
-extern "C" DLLEXPORT constinit auto SKSEPlugin_Version = []()
+extern "C" DLLEXPORT bool SKSEAPI
+SKSEPlugin_Query(const SKSE::QueryInterface* a_skse, SKSE::PluginInfo* a_info)
 {
-	SKSE::PluginVersionData v{};
+	a_info->infoVersion = SKSE::PluginInfo::kVersion;
+	a_info->name = Plugin::NAME.data();
+	a_info->version = Plugin::VERSION[0];
 
-	v.PluginVersion(Plugin::VERSION);
-	v.PluginName(Plugin::NAME);
-	v.AuthorName("meh321 and Parapets"sv);
 
-	v.UsesAddressLibrary(true);
+	if (a_skse->IsEditor()) {
+		logger::critical("Loaded in editor, marking as incompatible"sv);
+		return false;
+	}
 
-	return v;
-}();
+	const auto ver = a_skse->RuntimeVersion();
+	if (ver < SKSE::RUNTIME_1_5_39) {
+		logger::critical(FMT_STRING("Unsupported runtime version {}"), ver.string());
+		return false;
+	}
+
+	return true;
+}
 
 extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Load(const SKSE::LoadInterface* a_skse)
 {
@@ -67,7 +76,7 @@ extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Load(const SKSE::LoadInterface* a_s
 	logger::info("{} v{}"sv, Plugin::NAME, Plugin::VERSION.string());
 
 	SKSE::Init(a_skse);
-	SKSE::AllocTrampoline(242);
+	SKSE::AllocTrampoline(256);
 
 	using namespace CustomSkills;
 

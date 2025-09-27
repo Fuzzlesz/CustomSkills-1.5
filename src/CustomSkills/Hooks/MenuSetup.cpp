@@ -58,7 +58,7 @@ namespace CustomSkills
 
 	void MenuSetup::SkillDomeArtPatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::Ctor, 0x413);
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::Ctor, 0x343);
 		REL::make_pattern<"E8">().match_or_fail(hook.address());
 
 		using RequestModelAsync_t = RE::BSResource::ErrorCode(
@@ -89,7 +89,7 @@ namespace CustomSkills
 
 	void MenuSetup::CameraPatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::SetCameraTarget, 0x27E);
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::SetCameraTarget, 0x268);
 		REL::make_pattern<
 			"80 3D ?? ?? ?? ?? 00 "
 			"BA 02 00 00 00 "
@@ -150,8 +150,8 @@ namespace CustomSkills
 
 	void MenuSetup::CreateStarsPatch()
 	{
-		auto hook1 = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::ProcessMessage, 0x9A3);
-		auto hook2 = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::ProcessMessage, 0xCF8);
+		auto hook1 = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::ProcessMessage, 0xA81);
+		auto hook2 = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::ProcessMessage, 0xDD1);
 		REL::make_pattern<"83 BE D0 01 00 00 18">().match_or_fail(hook1.address());
 		REL::make_pattern<"83 BE D0 01 00 00 18">().match_or_fail(hook2.address());
 

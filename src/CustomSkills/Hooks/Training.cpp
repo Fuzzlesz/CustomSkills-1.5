@@ -17,7 +17,7 @@ namespace CustomSkills
 
 	void Training::MenuSkillPatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::TrainingMenu::SetTrainer, 0x63);
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::TrainingMenu::SetTrainer, 0x61);
 		REL::make_pattern<"E8">().match_or_fail(hook.address());
 
 		using GetTeachesSkill_t = RE::ActorValue(RE::TESClass::*)() const;
@@ -40,7 +40,7 @@ namespace CustomSkills
 
 	void Training::SkillNamePatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::GetActorValueName, 0x83);
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::GetActorValueName, 0x79);
 		REL::make_pattern<"33 C0 48 83 C4 20">().match_or_fail(hook.address());
 
 		auto GetSkillName = +[]() -> const char*
@@ -97,7 +97,7 @@ namespace CustomSkills
 
 	void Training::IncrementSkillPatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::TrainingMenu::Train, 0xD8);
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::TrainingMenu::Train, 0xCE);
 		REL::make_pattern<"E8">().match_or_fail(hook.address());
 
 		using IncrementSkill_t = void (RE::PlayerCharacter::*)(RE::ActorValue, std::uint32_t);

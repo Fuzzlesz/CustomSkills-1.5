@@ -74,7 +74,7 @@ namespace CustomSkills
 	}
 
 	void Game::ShowHUDMessage(
-		RE::HUDData::Type a_messageType,
+		RE::HUD_MESSAGE_TYPE a_messageType,
 		const char* a_message,
 		RE::TESQuest* a_owningQuest,
 		RE::BGSQuestObjective* a_questObjective)
@@ -96,6 +96,6 @@ namespace CustomSkills
 		char buf[200];
 		std::snprintf(buf, 200, text, a_name.data(), a_level);
 
-		Game::ShowHUDMessage(RE::HUDData::Type::kSkillIncrease, buf, nullptr, nullptr);
+		Game::ShowHUDMessage(RE::HUD_MESSAGE_TYPE::kSkillIncrease, buf, nullptr, nullptr);
 	}
 }

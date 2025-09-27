@@ -17,7 +17,7 @@ namespace CustomSkills
 	{
 		auto hook = REL::Relocation<std::uintptr_t>(
 			RE::Offset::LegendarySkillResetConfirmCallback::Run,
-			0x20D);
+			0x273);
 
 		using MakeLegendary_t = void(RE::PlayerCharacter::PlayerSkills::*)(RE::ActorValue);
 		static REL::Relocation<MakeLegendary_t> _MakeLegendary;
@@ -48,9 +48,9 @@ namespace CustomSkills
 	{
 		auto hook = REL::Relocation<std::uintptr_t>(
 			RE::Offset::BGSSkillPerkTreeNode::RefundPerks,
-			0xED);
+			0xA2);
 
-		REL::make_pattern<"44 00 B8 ?? ?? 00 00">().match_or_fail(hook.address());
+	REL::make_pattern<"40 00 B0 ?? ?? 00 00">().match_or_fail(hook.address());
 
 		static auto ModifyPerkPoints = +[](std::uint8_t a_countDelta)
 		{
@@ -69,10 +69,10 @@ namespace CustomSkills
 				Xbyak::Label funcLbl;
 				Xbyak::Label retnLbl;
 
-				mov(cl, r15b);
+				mov(cl, sil);
 				call(ptr[rip + funcLbl]);
 				xor_(r8d, r8d);
-				mov(rdx, r13);
+				mov(rdx, rbp);
 
 				jmp(ptr[rip + retnLbl]);
 
