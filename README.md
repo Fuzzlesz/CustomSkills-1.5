@@ -1,5 +1,7 @@
 Custom Skills Framework
 
+Port of the 3.0 SKSE version by Parapets to Skyrim version 1.5.97.
+
 ## Requirements
 * [CMake](https://cmake.org/)
 	* Add this to your `PATH`
@@ -15,8 +17,8 @@ Custom Skills Framework
 
 ## Building
 ```
-git clone https://github.com/Exit-9B/CustomSkills
-cd CustomSkills
+git clone https://github.com/Fuzzlesz/CustomSkills-1.5
+cd CustomSkills-1.5
 git submodule init
 git submodule update
 cmake --preset vs2022-windows

@@ -14,10 +14,8 @@ list(APPEND CMAKE_MODULE_PATH
 	"${PROJECT_SOURCE_DIR}/tools/BethesdaCMakeModules/Modules"
 )
 include(SKSEPlugin)
-include(Papyrus)
 
 set(SKSE_USE_XBYAK ON)
-set(SKSE_SUPPORT_VR OFF)
 
 SKSEPlugin_Add(
 	${PROJECT_NAME}
@@ -46,34 +44,3 @@ target_link_libraries(
 	PRIVATE
 		jsoncpp_static
 )
-
-if(SkyrimSE_PATH)
-	file(GLOB SCRIPT_SOURCES
-		LIST_DIRECTORIES false
-		CONFIGURE_DEPENDS
-		"${PROJECT_SOURCE_DIR}/scripts/*.psc"
-	)
-
-	Papyrus_Add(
-		"PapyrusAPI"
-		GAME ${SkyrimSE_PATH}
-		IMPORTS
-			"${PROJECT_SOURCE_DIR}/scripts"
-		SOURCES ${SCRIPT_SOURCES}
-		OPTIMIZE
-		ANONYMIZE
-		COMPONENT ${CMAKE_INSTALL_DEFAULT_COMPONENT_NAME}
-	)
-endif()
-
-install(
-	FILES
-		"${PROJECT_SOURCE_DIR}/data/SKSE/CustomConsole/CustomSkills.yaml"
-	DESTINATION
-		SKSE/CustomConsole
-)
-
-set(CPACK_GENERATOR "7Z")
-set(CPACK_PACKAGE_FILE_NAME ${PROJECT_NAME}-${PROJECT_VERSION})
-set(CPACK_INCLUDE_TOPLEVEL_DIRECTORY FALSE)
-include(CPack)
