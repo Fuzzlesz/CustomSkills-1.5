@@ -34,7 +34,7 @@ namespace CustomSkills
 		const float useMult = Info->skill->useMult;
 		if (useMult == 0.0f)
 			return;
-		const float useOffset = Info->skill->useOffset;
+		const float useOffset = Info->skill->offsetMult;
 		const float improveMult = Info->skill->improveMult;
 		const float improveOffset = Info->skill->improveOffset;
 

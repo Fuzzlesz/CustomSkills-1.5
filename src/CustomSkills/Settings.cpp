@@ -195,7 +195,7 @@ namespace CustomSkills
 
 		sk->Info->skill = new RE::ActorValueInfo::Skill{
 			.useMult = 1.0f,
-			.useOffset = 0.0f,
+			.offsetMult = 0.0f,
 			.improveMult = 1.0f,
 			.improveOffset = 0.0f
 		};
@@ -206,7 +206,7 @@ namespace CustomSkills
 				sk->Info->skill->useMult = useMult.asFloat();
 			}
 			if (const auto& useOffset = experienceFormula["useOffset"s]; useOffset.isNumeric()) {
-				sk->Info->skill->useOffset = useOffset.asFloat();
+				sk->Info->skill->offsetMult = useOffset.asFloat();
 			}
 			if (const auto& improveMult = experienceFormula["improveMult"s];
 				improveMult.isNumeric()) {
