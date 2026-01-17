@@ -90,10 +90,10 @@ namespace CustomSkills
 				Xbyak::Label retnLbl;
 
 				mov(ecx, dword[rdi + offsetof(RE::StatsMenu, numSelectableTrees)]);
-				movaps(xmm1, xmm2);
+				movaps(xmm1, xmm7);
 				call(ptr[rip + funcLbl]);
-				mulss(xmm6, xmm0);
-				comiss(xmm6, xmm8);
+				mulss(xmm2, xmm0);
+				comiss(xmm2, xmm8);
 				jmp(ptr[rip + retnLbl]);
 
 				L(funcLbl);
