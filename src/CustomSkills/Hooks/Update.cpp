@@ -1,5 +1,5 @@
 #include "Update.h"
-
+#include "SkillUse.h"
 #include "CustomSkills/CustomSkillsManager.h"
 #include "RE/Offset.h"
 
@@ -23,7 +23,14 @@ namespace CustomSkills
 		static REL::Relocation<DoFrame_t> _DoFrame;
 
 		auto DoFrame = +[](RE::Main* a_main)
-		{
+		{// WORKAROUND: Delay the hook until the first frame to ensure we hook after SleepToGainExperience, to avoid crash
+			static bool s_hooksWritten = false;
+			if (!s_hooksWritten) {
+				SkillUse::WriteHooks();
+				logger::info("SkillUse hooks written"sv);
+				s_hooksWritten = true;
+			}
+
 			CustomSkillsManager::UpdateMenu();
 			CustomSkillsManager::UpdateSkills();
 			CustomSkillsManager::UpdateTraining();

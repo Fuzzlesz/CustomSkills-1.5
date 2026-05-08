@@ -94,7 +94,8 @@ extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Load(const SKSE::LoadInterface* a_s
 
 	Training::WriteHooks();
 	SkillBooks::WriteHooks();
-	SkillUse::WriteHooks();
+	// NOTE: SkillUse hooks are delayed until the first frame in Update::FrameHook to ensure they are hooked after SleepToGainExperience
+	// SkillUse::WriteHooks();
 
 	auto* const papyrus = SKSE::GetPapyrusInterface();
 	papyrus->Register(
