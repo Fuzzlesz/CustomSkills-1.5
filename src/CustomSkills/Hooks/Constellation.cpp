@@ -57,6 +57,7 @@ namespace CustomSkills
 	void Constellation::EnterConstellationPatch1()
 	{
 		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::Rotate, 0x3A4);
+		REL::make_pattern<"8B 05">().match_or_fail(hook.address());
 
 		auto EnterTree = +[](std::uint32_t a_index)
 		{
@@ -95,6 +96,7 @@ namespace CustomSkills
 	void Constellation::EnterConstellationPatch2()
 	{
 		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::Animate, 0x149);
+		REL::make_pattern<"48 63 8B C0 01 00 00">().match_or_fail(hook.address());
 
 		auto EnterTree = +[](std::uint32_t a_index)
 		{
@@ -132,6 +134,7 @@ namespace CustomSkills
 		auto hook = REL::Relocation<std::uintptr_t>(
 			RE::Offset::StatsMenu::ProcessRotateEvent,
 			0x141);
+		REL::make_pattern<"48 63 9F C0 01 00 00">().match_or_fail(hook.address());
 
 		auto ExitTree = +[](std::uint32_t a_index)
 		{
@@ -172,6 +175,7 @@ namespace CustomSkills
 		auto hook = REL::Relocation<std::uintptr_t>(
 			RE::Offset::StatsMenu::ProcessRotateEvent,
 			0x2A7);
+		REL::make_pattern<"48 63 B7 C0 01 00 00">().match_or_fail(hook.address());
 
 		auto ExitTree = +[](std::uint32_t a_index)
 		{
@@ -210,6 +214,7 @@ namespace CustomSkills
 	void Constellation::KinectPatch()
 	{
 		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::GotoNode, 0xAB);
+		REL::make_pattern<"48 63 9F C0 01 00 00">().match_or_fail(hook.address());
 
 		auto SetSelectedTree = +[](RE::StatsMenu* a_statsMenu, std::uint32_t a_newIndex)
 		{
@@ -252,6 +257,7 @@ namespace CustomSkills
 	void Constellation::UpdateConstellationPatch()
 	{
 		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::ProcessMessage, 0x1020);
+		REL::make_pattern<"8B DF">().match_or_fail(hook.address());
 
 		auto UpdateConstellation = +[](std::uint32_t a_index)
 		{

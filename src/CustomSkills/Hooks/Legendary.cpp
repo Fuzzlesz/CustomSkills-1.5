@@ -18,8 +18,9 @@ namespace CustomSkills
 		auto hook = REL::Relocation<std::uintptr_t>(
 			RE::Offset::LegendarySkillResetConfirmCallback::Run,
 			0x273);
+		REL::make_pattern<"E8">().match_or_fail(hook.address());
 
-		using MakeLegendary_t = void(RE::PlayerCharacter::PlayerSkills::*)(RE::ActorValue);
+		using MakeLegendary_t = void (RE::PlayerCharacter::PlayerSkills::*)(RE::ActorValue);
 		static REL::Relocation<MakeLegendary_t> _MakeLegendary;
 
 		auto MakeLegendary = +[](RE::PlayerCharacter::PlayerSkills* a_playerSkills,
