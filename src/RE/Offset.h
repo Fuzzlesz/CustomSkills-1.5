@@ -6,7 +6,7 @@ namespace RE
 	{
 		namespace BGSPerk
 		{
-			inline constexpr auto GetRequirementsText = REL::ID(23356);				// 1403388a0
+			inline constexpr auto BuildDescriptionString = REL::ID(23356);			// 1403388a0
 		}
 
 		namespace BSScaleformManager
@@ -19,17 +19,17 @@ namespace RE
 			inline constexpr auto RefundPerks = REL::ID(51716);						// 1408caf80
 		}
 
-		namespace BSTArrayBase
+		namespace CharacterProgression
 		{
-			inline constexpr auto ListAlloc = REL::ID(66908);						// 140c04a20
+			inline constexpr auto GetSkillInfo = REL::ID(40552);					// 1406E6130
 		}
 
 		namespace CraftingSubMenus
 		{
 			namespace ConstructibleObjectMenu
 			{
-				inline constexpr auto CreationConfirmed = REL::ID(50476);			// 14086E2C0
-				inline constexpr auto UpdateBottomBar = REL::ID(50566);			    // 140874350
+				inline constexpr auto FinishCraftItem = REL::ID(50476);            // 14086E2C0
+				inline constexpr auto UpdateSelectedItemDisplay = REL::ID(50566);  // 140874350
 			}
 		}
 
@@ -50,33 +50,32 @@ namespace RE
 
 		namespace StatsMenu
 		{
-			inline constexpr auto Animate = REL::ID(51644);                         // 1408C09E0
-			inline constexpr auto Create = REL::ID(51738);							// 1408cc7b0	
-			inline constexpr auto CreateStars = REL::ID(51667);						// 1408C7650	
-			inline constexpr auto Ctor = REL::ID(51636);							// 1408be990
-			inline constexpr auto DtorImpl = REL::ID(51637);						// 1408beeb0
-			inline constexpr auto GetPerkCount = REL::ID(51664);					// 1408c6f20
-			inline constexpr auto GotoNode = REL::ID(51666);                        // 1408C7110
-			inline constexpr auto LastSelectedTree = REL::ID(510254);               // 141DF4A1C
-			inline constexpr auto LoadSkydome = REL::ID(51658);                     // 1408C4CA0
-			inline constexpr auto ModifyPerkCount = REL::ID(51665);					// 1408c7050
-			inline constexpr auto ProcessButton = REL::ID(51647);					// 1408c0d90
-			inline constexpr auto ProcessMessage = REL::ID(51638);					// 1408bf360
-			inline constexpr auto ProcessRotateEvent = REL::ID(51659);				// 1408c51b0
-			inline constexpr auto Rotate = REL::ID(51661);							// 1408c5b60
+			inline constexpr auto BuildSnapNodes = REL::ID(51667);					// 1408C7650
+			inline constexpr auto CreateMenu = REL::ID(51738);						// 1408cc7b0
+			inline constexpr auto CreateStatsCamera = REL::ID(51657);               // 1408c4530
+			inline constexpr auto Ctor = REL::ID(51636);                            // 1408be990
+			inline constexpr auto DtorImpl = REL::ID(51637);                        // 1408beeb0
+			inline constexpr auto GetPerkCount = REL::ID(51664);                    // 1408c6f20
+			inline constexpr auto HandleEvent_ButtonEvent = REL::ID(51647);         // 1408c0d90
+			inline constexpr auto HandleMovement = REL::ID(51659);                  // 1408c51b0
+			inline constexpr auto InitModel = REL::ID(51658);                       // 1408C4CA0
+			inline constexpr auto InitSkills = REL::ID(51652);                      // 1408c20c0
+			inline constexpr auto InterpolateCamera = REL::ID(51644);               // 1408C09E0
+			inline constexpr auto ModifyPerkCount = REL::ID(51665);                 // 1408c7050
+			inline constexpr auto ProcessMessage = REL::ID(51638);                  // 1408bf360
+			inline constexpr auto RotateSkills = REL::ID(51661);                    // 1408c5b60
+			inline constexpr auto SelectNode = REL::ID(51669);                      // 1408c7920
 			inline constexpr auto SelectPerk = REL::ID(51648);                      // 1408c1970
-			inline constexpr auto SelectStar = REL::ID(51669);						// 1408c7920
-			inline constexpr auto SetBeastSkillInfo = REL::ID(51673);				// 1408c8350
-			inline constexpr auto SetCameraTarget = REL::ID(51657);					// 1408c4530
-			inline constexpr auto SetSelectedTree = REL::ID(51666);					// 1408c7110
-			inline constexpr auto SetSkillInfo = REL::ID(51654);					// 1408c2ba0
-			inline constexpr auto UpdateSelectedTree = REL::ID(51670);              // 1408C7E50
-			inline constexpr auto UpdateSkillList = REL::ID(51652);					// 1408c20c0
+			inline constexpr auto SelectSkill = REL::ID(51666);                     // 1408c7110
+			inline constexpr auto SetBeastSkillInfo = REL::ID(51673);               // 1408c8350
+			inline constexpr auto uiLastViewedSkill = REL::ID(510254);              // 141DF4A1C
+			inline constexpr auto UpdateCurrentSkill = REL::ID(51670);              // 1408C7E50
+			inline constexpr auto UpdateDescriptionCard = REL::ID(51654);           // 1408c2ba0
 		}
 
 		namespace TESClass
 		{
-			inline constexpr auto GetMaximumTrainingLevel = REL::ID(23959);			// 140353B20
+			inline constexpr auto GetTrainingSkillLevel = REL::ID(23959);			// 140353B20
 		}
 
 		namespace TESObjectBOOK
@@ -86,7 +85,7 @@ namespace RE
 
 		namespace TrainingMenu
 		{
-			inline constexpr auto SetTrainer = REL::ID(51792);						// 1408CE740
+			inline constexpr auto SetupMenu = REL::ID(51792);						// 1408CE740
 			inline constexpr auto Train = REL::ID(51793);							// 1408CE8E0
 		}
 

@@ -20,7 +20,7 @@ namespace CustomSkills
 
 	void Constellation::LoadSkydomePatch1()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::LoadSkydome, 0x159);
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::InitModel, 0x159);
 		REL::make_pattern<"48 89 8C DF 98 00 00 00">().match_or_fail(hook.address());
 
 		auto SetCImageShader = +[](RE::BSShaderProperty* shader, std::uint32_t index)
@@ -56,7 +56,7 @@ namespace CustomSkills
 
 	void Constellation::EnterConstellationPatch1()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::Rotate, 0x3A4);
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::RotateSkills, 0x3A4);
 		REL::make_pattern<"8B 05">().match_or_fail(hook.address());
 
 		auto EnterTree = +[](std::uint32_t a_index)
@@ -95,7 +95,9 @@ namespace CustomSkills
 
 	void Constellation::EnterConstellationPatch2()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::Animate, 0x149);
+		auto hook = REL::Relocation<std::uintptr_t>(
+			RE::Offset::StatsMenu::InterpolateCamera,
+			0x149);
 		REL::make_pattern<"48 63 8B C0 01 00 00">().match_or_fail(hook.address());
 
 		auto EnterTree = +[](std::uint32_t a_index)
@@ -131,9 +133,7 @@ namespace CustomSkills
 
 	void Constellation::ExitConstellationPatch1()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(
-			RE::Offset::StatsMenu::ProcessRotateEvent,
-			0x141);
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::HandleMovement, 0x141);
 		REL::make_pattern<"48 63 9F C0 01 00 00">().match_or_fail(hook.address());
 
 		auto ExitTree = +[](std::uint32_t a_index)
@@ -173,7 +173,7 @@ namespace CustomSkills
 	void Constellation::ExitConstellationPatch2()
 	{
 		auto hook = REL::Relocation<std::uintptr_t>(
-			RE::Offset::StatsMenu::ProcessRotateEvent,
+			RE::Offset::StatsMenu::HandleMovement,
 			0x2A7);
 		REL::make_pattern<"48 63 B7 C0 01 00 00">().match_or_fail(hook.address());
 
@@ -213,7 +213,7 @@ namespace CustomSkills
 
 	void Constellation::KinectPatch()
 	{
-		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::GotoNode, 0xAB);
+		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::StatsMenu::SelectSkill, 0xAB);
 		REL::make_pattern<"48 63 9F C0 01 00 00">().match_or_fail(hook.address());
 
 		auto SetSelectedTree = +[](RE::StatsMenu* a_statsMenu, std::uint32_t a_newIndex)
