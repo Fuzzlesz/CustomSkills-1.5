@@ -105,8 +105,10 @@ namespace CustomSkills
 
 	bool CustomSkillsManager::IsMenuControlsEnabled()
 	{
-		static REL::Relocation<bool()> func{ REL::ID(54851) };					  // 140973610
-		return func();
+		static REL::Relocation<bool(RE::BSScript::IVirtualMachine*, std::uint32_t, void*)> func{
+			RE::Offset::SkyrimScript::Game_IsMenuControlsEnabled
+		};
+		return func(nullptr, 0, nullptr);
 	}
 
 	bool CustomSkillsManager::IsStatsMenuOpen()

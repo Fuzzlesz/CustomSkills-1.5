@@ -48,6 +48,11 @@ namespace RE
 			inline constexpr auto GetSkillProgress = REL::ID(40552);				// 1406e6130
 		}
 
+		namespace SkyrimScript
+		{
+			inline constexpr auto Game_IsMenuControlsEnabled = REL::ID(54851);		// 140973610
+		}
+
 		namespace StatsMenu
 		{
 			inline constexpr auto BuildSnapNodes = REL::ID(51667);					// 1408C7650
