@@ -58,7 +58,7 @@ namespace CustomSkills
 		REL::make_pattern<"0F 84 81 00 00 00">().match_or_fail(hook.address());
 
 		__declspec(allocate(".jit")) alignas(
-			16) static constinit auto buffer = util::jit_buffer<64>();
+			16) static constinit auto buffer = util::jit_buffer<80>();
 
 		struct Patch : Xbyak::CodeGenerator
 		{
@@ -75,11 +75,11 @@ namespace CustomSkills
 				call(ptr[rip + funcLbl]);
 				test(al, al);
 				jnz(learnedSkill, T_SHORT);
-				
+
 				movzx(ecx, byte[rdi + 0x110]);
 				jmp(ptr[rip]);
 				dq(a_hookAddr + 0x87);
-				
+
 				L(learnedSkill);
 				jmp(ptr[rip]);
 				dq(a_hookAddr + 0xF4);
