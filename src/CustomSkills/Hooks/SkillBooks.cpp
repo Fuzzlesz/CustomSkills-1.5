@@ -6,6 +6,8 @@
 
 #include <xbyak/xbyak.h>
 
+#pragma section(".jit", execute)
+
 namespace CustomSkills
 {
 	void SkillBooks::WriteHooks()
@@ -55,9 +57,13 @@ namespace CustomSkills
 		auto hook = REL::Relocation<std::uintptr_t>(RE::Offset::TESObjectBOOK::Read, 0x4A);
 		REL::make_pattern<"0F 84 81 00 00 00">().match_or_fail(hook.address());
 
+		__declspec(allocate(".jit")) alignas(
+			16) static constinit auto buffer = util::jit_buffer<64>();
+
 		struct Patch : Xbyak::CodeGenerator
 		{
 			Patch(std::uintptr_t a_hookAddr, std::uintptr_t a_funcAddr)
+				: Xbyak::CodeGenerator(buffer.size(), buffer.data())
 			{
 				Xbyak::Label noHook;
 				Xbyak::Label funcLbl;
@@ -68,7 +74,7 @@ namespace CustomSkills
 				mov(rcx, rdi);
 				call(ptr[rip + funcLbl]);
 				test(al, al);
-				jne(learnedSkill);
+				jnz(learnedSkill, T_SHORT);
 				
 				movzx(ecx, byte[rdi + 0x110]);
 				jmp(ptr[rip]);
@@ -87,10 +93,13 @@ namespace CustomSkills
 			}
 		};
 
-		auto patch = new Patch(hook.address(), reinterpret_cast<std::uintptr_t>(&ReadSkillBook));
-		patch->ready();
+		if (auto ctx = REL::safe_write_context(buffer.data(), buffer.size())) {
+			auto patch = Patch(hook.address(), reinterpret_cast<std::uintptr_t>(&ReadSkillBook));
+			patch.ready();
+			assert(((patch.getSize() + 0xF) & ~0xF) == buffer.size());
+		}
 
 		auto& trampoline = SKSE::GetTrampoline();
-		trampoline.write_branch<6>(hook.address(), patch->getCode());
+		trampoline.write_branch<6>(hook.address(), buffer.data());
 	}
 }
